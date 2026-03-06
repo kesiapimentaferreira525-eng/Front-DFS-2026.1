@@ -1,10 +1,12 @@
 import axios from "axios";
-import { Eye, Search, Signal, User } from "lucide-react";
+import { Eye, Search, Signal, User, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import "./OffersPage.css";
 
 const OffersPage = () => {
+  const { token } = useAuth();
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [busca, setBusca] = useState("");
@@ -35,7 +37,15 @@ const OffersPage = () => {
   return (
     <div className="container">
       <header className="header">
-        <h1>Ofertas</h1>
+        <div className="header-title">
+          <h1>Ofertas</h1>
+          {token && (
+            <Link to="/offers/create" className="btn-create-offer">
+              <Plus size={20} />
+              Criar Oferta
+            </Link>
+          )}
+        </div>
         <div className="filter-bar">
           <div className="search-input">
             <Search size={20} />
