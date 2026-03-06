@@ -6,10 +6,14 @@ import {
   FaUser,
   FaUserPlus,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import { saveUser } from "../../services/ApiService";
 import "./Register.css";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,13 +27,22 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
-      // Endpoint fictício seguindo o padrão Node/Prisma do Grupo 10
-      // await axios.post('http://localhost:3000/api/users', formData);
-      console.log("Dados enviados:", formData);
-      alert("Cadastro realizado com sucesso!");
+      await saveUser(formData);
+
+      alert("Cadastro realizado com sucesso! Agora você já pode entrar.");
+
+      navigate("/login");
     } catch (error) {
-      alert("Erro ao realizar cadastro.");
+      console.error("Erro ao cadastrar:", error);
+      alert(
+        error.response?.data?.message ||
+          "Erro ao realizar cadastro. Verifique os dados ou tente novamente."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,6 +67,7 @@ const Register = () => {
               value={formData.name}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
 
@@ -68,6 +82,7 @@ const Register = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
 
@@ -82,6 +97,7 @@ const Register = () => {
               value={formData.phone}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
 
@@ -96,11 +112,12 @@ const Register = () => {
               onChange={handleChange}
               required
               rows="3"
+              disabled={loading}
             />
           </div>
 
-          <button type="submit" className="register-btn">
-            Cadastrar
+          <button type="submit" className="register-btn" disabled={loading}>
+            {loading ? "Cadastrando..." : "Cadastrar"}
           </button>
         </form>
 

@@ -32,17 +32,23 @@ export function LoginPage() {
   const { login } = useAuth();
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Evita o reload da página
+    e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const { data } = await loginUser({ email, password });
+      const { data } = await loginUser({ email });
+
       login(data);
+
       navigate("/");
     } catch (err) {
-      setError("Email ou senha inválidos. Tente novamente.");
-      console.error(err);
+      const errorMessage =
+        err.message === "Usuário não encontrado."
+          ? "Este e-mail não está cadastrado em nossa base."
+          : "Erro ao conectar com o servidor. Tente novamente mais tarde.";
+
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

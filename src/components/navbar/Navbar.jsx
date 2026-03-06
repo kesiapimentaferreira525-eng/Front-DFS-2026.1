@@ -1,12 +1,22 @@
-import { UserCircle } from "lucide-react"; // Ícone moderno de usuário
-import { Link } from "react-router-dom";
+import { LogOut, UserCircle } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { useAuth } from "../../context/AuthContext";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const { token, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <img src="/public/Logo1.jpeg" alt="" />
+        <img src="/Logo1.jpeg" alt="Logo" />
       </div>
 
       <ul className="navbar-links">
@@ -28,10 +38,17 @@ const Navbar = () => {
       </ul>
 
       <div className="navbar-login">
-        <Link to={"/login"} className="login-button">
-          <UserCircle size={24} />
-          <span>Login</span>
-        </Link>
+        {token ? (
+          <button onClick={handleLogout} className="login-button logout-btn">
+            <LogOut size={24} />
+            <span>Sair</span>
+          </button>
+        ) : (
+          <Link to="/login" className="login-button">
+            <UserCircle size={24} />
+            <span>Login</span>
+          </Link>
+        )}
       </div>
     </nav>
   );

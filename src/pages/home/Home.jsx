@@ -1,32 +1,33 @@
-import { ArrowRight, Award, BookOpen, Clock, Star } from "lucide-react";
+import { ArrowRight, MessageSquare, Repeat, Search, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 
 const Home = () => {
-  const cursosDestaque = [
+  // Dados fictícios baseados na proposta de troca de conhecimento
+  const ofertasConhecimento = [
     {
       id: 1,
-      titulo: "Desenvolvimento Web Fullstack",
-      preco: "R$ 0,00",
-      antigoPreco: "R$ 497,00",
-      desc: "Aprenda React, Node e Banco de Dados.",
-      tag: "Mais Acessado",
+      titulo: "Lógica de Programação",
+      autor: "Carlos Silva",
+      busca: "Quero aprender Inglês",
+      desc: "Ensino o básico de algoritmos e JavaScript para iniciantes.",
+      tag: "Tecnologia",
     },
     {
       id: 2,
-      titulo: "Design UX/UI Moderno",
-      preco: "R$ 0,00",
-      antigoPreco: "R$ 197,00",
-      desc: "Crie interfaces que encantam usuários.",
-      tag: "Oferta",
+      titulo: "Design de Logotipos",
+      autor: "Ana Souza",
+      busca: "Quero aprender Violão",
+      desc: "Posso te ensinar a criar marcas usando o Illustrator ou Canva.",
+      tag: "Artes",
     },
     {
       id: 3,
-      titulo: "Marketing Digital 360",
-      preco: "R$ 0,00",
-      antigoPreco: "R$ 297,00",
-      desc: "Domine anúncios e redes sociais.",
-      tag: "Novo",
+      titulo: "Culinária Vegetariana",
+      autor: "Marcos Lima",
+      busca: "Quero ajuda em Excel",
+      desc: "Troco receitas e técnicas de preparo de marmitas saudáveis.",
+      tag: "Gastronomia",
     },
   ];
 
@@ -34,68 +35,72 @@ const Home = () => {
     <main className="">
       <section className="hero">
         <div className="hero-content">
-        
+          <div className="badge">Comunidade Colaborativa</div>
           <h1>
-            Domine as habilidades que o <span>mercado procura.</span>
+            Transforme o que você sabe em <span>oportunidade para outros.</span>
           </h1>
-      
-      <div className="hero-text-container">
-  <p className="hero-subtitle">
-    Acesse os melhores materiais e troque experiências com nossa comunidade de especialistas.
-  </p>
-  <p className="hero-cta-text">
-    <strong>Cadastre-se e comece a estudar hoje mesmo!</strong>
-  </p>
-</div>
+
+          <div className="hero-text-container">
+            <p className="hero-subtitle">
+              Muitas pessoas querem aprender, mas não podem pagar. Conecte-se
+              com quem quer ensinar e ofereça seu conhecimento em troca.
+            </p>
+            <p className="hero-cta-text">
+              <strong>Sem dinheiro, apenas troca de experiências.</strong>
+            </p>
+          </div>
+
           <div className="hero-buttons">
             <Link to={"/offers"} className="btn-primary">
-              Ver Cursos
+              Explorar Ofertas
             </Link>
-            <Link to={"/sobre"} className="btn-secondary">
-              Saiba Mais
+            <Link to={"/register-knowledge"} className="btn-secondary">
+              Oferecer Conhecimento
             </Link>
           </div>
         </div>
+
         <div className="hero-stats">
           <div className="stat-card">
-            <BookOpen color="#3b82f6" />
-            <span>+500 Cursos</span>
+            <Users color="#3b82f6" />
+            <span>+200 Membros</span>
           </div>
           <div className="stat-card">
-            <Award color="#3b82f6" />
-            <span>Certificados Reais</span>
+            <Repeat color="#3b82f6" />
+            <span>Trocas Ativas</span>
           </div>
         </div>
       </section>
 
-      {/* SEÇÃO DE OFERTAS - Grid de Cursos */}
+      {/* SEÇÃO DE OFERTAS */}
       <section id="ofertas" className="courses-section">
         <div className="section-header">
-          <h2>Ofertas em Destaque</h2>
-          <p>CURSO COMPLETO DO BASICO AO AVANÇADO</p>
+          <h2>Conhecimentos Disponíveis</h2>
+          <p>Encontre alguém para ensinar você hoje</p>
         </div>
 
         <div className="courses-grid">
-          {cursosDestaque.map((curso) => (
-            <div key={curso.id} className="course-card">
-              <div className="course-badge">{curso.tag}</div>
-              <div className="course-image"></div>
+          {ofertasConhecimento.map((oferta) => (
+            <div key={oferta.id} className="course-card">
+              <div className="course-badge">{oferta.tag}</div>
+              <div className="course-image">
+                {/* Placeholder para ícone ou foto do autor */}
+                <Search size={48} color="#cbd5e1" />
+              </div>
               <div className="course-info">
-                <h3>{curso.titulo}</h3>
-                <p>{curso.desc}</p>
-                <div className="rating">
-                  <Star size={16} fill="#fbbf24" color="#fbbf24" />
-                  <Star size={16} fill="#fbbf24" color="#fbbf24" />
-                  <Star size={16} fill="#fbbf24" color="#fbbf24" />
-                  <Star size={16} fill="#fbbf24" color="#fbbf24" />
-                  <span>(4.9)</span>
+                <h3>{oferta.titulo}</h3>
+                <p className="author-name">
+                  Por: <strong>{oferta.autor}</strong>
+                </p>
+                <p className="description">{oferta.desc}</p>
+
+                <div className="exchange-box">
+                  <Repeat size={14} />
+                  <span>{oferta.busca}</span>
                 </div>
-                <div className="price-container">
-                  <span className="old-price">{curso.antigoPreco}</span>
-                  <span className="new-price">{curso.preco}</span>
-                </div>
+
                 <button className="btn-enroll">
-                  Quero minha vaga <ArrowRight size={18} />
+                  Tenho interesse <ArrowRight size={18} />
                 </button>
               </div>
             </div>
@@ -106,17 +111,17 @@ const Home = () => {
       {/* SEÇÃO POR QUE NÓS? */}
       <section className="features-strip">
         <div className="feature">
-          <Clock size={30} />
+          <Users size={30} color="#3b82f6" />
           <div>
-            <h4>Acesso Vitalício</h4>
-            <p>Assista quando e onde quiser.</p>
+            <h4>Comunidade Real</h4>
+            <p>Conecte-se com pessoas da sua região ou online.</p>
           </div>
         </div>
         <div className="feature">
-          <Award size={30} />
+          <MessageSquare size={30} color="#3b82f6" />
           <div>
-            <h4>Certificado de Conclusão</h4>
-            <p>Válido em todo território nacional.</p>
+            <h4>Troca Direta</h4>
+            <p>Combine o horário e o formato direto com o parceiro.</p>
           </div>
         </div>
       </section>
