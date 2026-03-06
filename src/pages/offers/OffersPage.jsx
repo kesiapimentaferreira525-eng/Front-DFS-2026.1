@@ -1,7 +1,7 @@
-import axios from "axios";
 import { Eye, Search, Signal, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getOffers } from "../../services/ApiService";
 import "./OffersPage.css";
 
 const OffersPage = () => {
@@ -12,7 +12,7 @@ const OffersPage = () => {
   const fetchOffers = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:3000/offers", {
+      const response = await getOffers({
         params: {
           busca: busca || undefined,
         },
@@ -73,7 +73,7 @@ const OffersPage = () => {
                 <div className="card-footer">
                   <Link
                     to={`/offers/${offer.id}`}
-                    state={{ offerData: offer }} // Aqui enviamos a oferta completa
+                    state={{ offerData: offer }}
                     className="btn-details"
                   >
                     <Eye size={18} /> Ver Detalhes
