@@ -5,6 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { PersonAdd } from "@mui/icons-material"
+import { deleteUser, getAllUsers } from "../services/ApiService"
 
 export function UserList(){
     const [users, setUsers] = useState([]);
@@ -12,13 +13,13 @@ export function UserList(){
     const navigate = useNavigate();
 
     const findUsers = async () => {
-        const { data } = await axios.get(`http://localhost:8080/users`)
+        const { data } = await getAllUsers();
         setUsers(data);
     }
 
     const handleDelete = async (id) => {
         if (window.confirm("Deseja realmente excluir esse usuario?")){
-            const response = await axios.delete(`http://localhost:8080/users/${id}`)
+            const response = await deleteUser(id);
             if(response.status == 204){
                 findUsers();
             }

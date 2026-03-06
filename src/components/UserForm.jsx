@@ -1,7 +1,11 @@
-import { Box, Button, Container, FormControlLabel, Paper, Switch, TextField, Typography } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Box, Button, Container, FormControlLabel, IconButton, Paper, Switch, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { getUserById, saveUser, updateUser } from "../services/ApiService";
 
 
 export function UserForm(){
@@ -13,29 +17,32 @@ export function UserForm(){
         isAdmin: false
     })
     const { id } = useParams();
+    const [show, setShow] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
         if (id) {
-            await axios.put(`http://localhost:8080/users/${id}`, form);
+            await updateUser(id, form);
         } else {
-            await axios.post(`http://localhost:8080/users`, form)
+            await saveUser(form);
         } 
-        navigate("/");
+        navigate("/users");
     }
 
-    const getUserById = async () => {
-        const { data } = await axios.get(`http://localhost:8080/users/${id}`)
+    const getUser = async () => {
+        const { data } = await getUserById(id);
         setForm(data);
     }
 
     useEffect(() => {
         if(id){
-            getUserById();
+            getUser();
         }
     }, [])
 
     return(
+        <>
+        <Header />
         <Container maxWidth="sm" sx={{ mt: 4 }}>
             <Paper elevation={3} sx={{ p: 3 }}>
                 <Typography> {id ? "Atualização de Usuario" : "Cadastro de Usuarios"} </Typography>
@@ -55,14 +62,15 @@ export function UserForm(){
                     onChange={(e) => setForm({...form, email: e.target.value})}
                 />
 
-                <TextField 
-                    label="Senha"
-                    type="password"
-                    fullWidth
-                    margin="normal"
-                    value={form.password}
-                    onChange={(e) => setForm({...form, password: e.target.value})}
-                />
+                 <TextField label="Senha" fullWidth type={show ? 'text' : 'password'} margin="normal" value={form.password}
+                    onChange={(e) => setForm({ ...form, password: e.target.value })} 
+                    slotProps={{
+                            input: {
+                            endAdornment: (
+                                <IconButton onClick={() => setShow(!show)}>
+                                    {show ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>),
+                    }}}/>  
 
                 <TextField 
                     label="Telefone"
@@ -88,5 +96,7 @@ export function UserForm(){
             </Paper>
 
         </Container>
+        <Footer/>
+        </>
     )
 }
