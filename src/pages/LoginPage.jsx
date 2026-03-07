@@ -41,7 +41,7 @@ export function LoginPage() {
       const { data } = await loginUser({ email });
 
       login(data);
-      ToastAlert("Usuário foi Logado com sucesso!", "sucesso");
+      ToastAlert("Usuário foi Autenticado com sucesso!", "sucesso");
       navigate("/");
     } catch (err) {
       const errorMessage =
