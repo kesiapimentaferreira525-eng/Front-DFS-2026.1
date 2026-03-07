@@ -54,6 +54,18 @@
   background-color: #2563eb;
 }
 
+/* Exemplo de estilo para o link ativo */
+.navbar-links a.active {
+  color: #007bff; /* Mude para a cor do seu projeto */
+  font-weight: bold;
+  border-bottom: 2px solid #007bff;
+}
+
+/* Se quiser estilizar o botão de login quando ativo também */
+.login-button.active {
+  background-color: #f0f0f0;
+}
+
 /* Responsividade simples */
 @media (max-width: 768px) {
   .navbar-links {

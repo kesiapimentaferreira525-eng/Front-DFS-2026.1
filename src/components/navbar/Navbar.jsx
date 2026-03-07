@@ -1,5 +1,6 @@
 import { LogOut, UserCircle } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+// 1. Troque Link por NavLink
+import { NavLink, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../context/AuthContext";
 import "./Navbar.css";
@@ -21,17 +22,19 @@ const Navbar = () => {
 
       <ul className="navbar-links">
         <li>
-          <Link to="/">Home</Link>
+          {/* 2. Use NavLink e o atributo 'end' na Home para evitar que ela fique ativa em todas as rotas */}
+          <NavLink to="/" end>
+            Home
+          </NavLink>
         </li>
         <li>
-          <Link to="/sobre">Sobre</Link>
+          <NavLink to="/sobre">Sobre</NavLink>
         </li>
         <li>
-          <Link to="/contact">Contato</Link>
+          <NavLink to="/contact">Contato</NavLink>
         </li>
-
         <li>
-          <Link to="/offers">Ofertas</Link>
+          <NavLink to="/offers">Ofertas</NavLink>
         </li>
       </ul>
 
@@ -42,10 +45,10 @@ const Navbar = () => {
             <span>Sair</span>
           </button>
         ) : (
-          <Link to="/login" className="login-button">
+          <NavLink to="/login" className="login-button">
             <UserCircle size={24} />
             <span>Login</span>
-          </Link>
+          </NavLink>
         )}
       </div>
     </nav>
