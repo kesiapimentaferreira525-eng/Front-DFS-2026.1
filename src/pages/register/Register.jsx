@@ -7,7 +7,7 @@ import {
   FaUserPlus,
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-
+import { ToastAlert } from "../../../utils/ToastAlerta";
 import { saveUser } from "../../services/ApiService";
 import "./Register.css";
 
@@ -32,14 +32,18 @@ const Register = () => {
     try {
       await saveUser(formData);
 
-      alert("Cadastro realizado com sucesso! Agora você já pode entrar.");
+      ToastAlert(
+        "Cadastro realizado com sucesso! Agora você já pode entrar.",
+        "sucesso"
+      );
 
       navigate("/login");
     } catch (error) {
       console.error("Erro ao cadastrar:", error);
-      alert(
+      ToastAlert(
         error.response?.data?.message ||
-          "Erro ao realizar cadastro. Verifique os dados ou tente novamente."
+          "Erro ao realizar cadastro. Verifique os dados ou tente novamente.",
+        "erro"
       );
     } finally {
       setLoading(false);
