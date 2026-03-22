@@ -1,8 +1,6 @@
 📘 Front-DFS-2026.1
 
-Este projeto é um exemplo prático desenvolvido para apresentar conceitos fundamentais de desenvolvimento Front-End utilizando React e Material UI, integrando a aplicação com uma API REST.
-
-O objetivo é demonstrar a construção de uma interface moderna com gerenciamento de componentes, comunicação com backend e estrutura de projeto utilizada em aplicações reais.
+Este projeto é uma aplicação prática desenvolvida para consolidar conceitos de Front-End. Utilizando o framework React em conjunto com o Material UI, a aplicação demonstra a integração com APIs REST, focando em uma interface moderna, e padrões de arquitetura adotados em projetos reais do mercado.
 
 Tecnologias utilizadas
 
